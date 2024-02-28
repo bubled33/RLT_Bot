@@ -1,0 +1,63 @@
+[
+        {
+            "$match": {
+                "dt": {
+                    "$gte": "{dt_from}",
+                    "$lte": "{dt_upto}"
+                }
+            }
+        }, {
+            "$addFields": {
+                "day": {
+                    "$dateFromParts": {
+                        "year": {
+                            "$year": "$dt"
+                        },
+                        "month": {
+                            "$month": "$dt"
+                        },
+                        "day": {
+                            "$dayOfMonth": "$dt"
+                        }
+                    }
+                },
+                "hour": {
+                    "$dateFromParts": {
+                        "year": {
+                            "$year": "$dt"
+                        },
+                        "month": {
+                            "$month": "$dt"
+                        },
+                        "day": {
+                            "$dayOfMonth": "$dt"
+                        },
+                        "hour": {
+                            "$hour": "$dt"
+                        }
+                    }
+                },
+                "month": {
+                    "$dateFromParts": {
+                        "year": {
+                            "$year": "$dt"
+                        },
+                        "month": {
+                            "$month": "$dt"
+                        }
+                    }
+                }
+            }
+        }, {
+            "$group": {
+                "_id": "${group_type}",
+                "value": {
+                    "$sum": "$value"
+                }
+            }
+        }, {
+            "$sort": {
+                "_id": 1
+            }
+        }
+]
